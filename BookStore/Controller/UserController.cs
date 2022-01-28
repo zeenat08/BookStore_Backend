@@ -43,5 +43,27 @@ namespace BookStore.Controller
                 return this.NotFound(new { Status = false, Message = ex.Message });
             }
         }
+
+        [HttpPost]
+        [Route("login")]
+        public async Task<IActionResult> Login([FromBody] LoginModel loginDetails)
+        {
+            try
+            {
+                var result = await this.manager.Login(loginDetails);
+                if (result != null)
+                {
+                    return this.Ok(new ResponseModel<LoginModel>() { Status = true, Message = "Login Successfully!", Data = result });
+                }
+                else
+                {
+                    return this.BadRequest(new { Status = false, Message = "Failed to Login, Try again" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(new { Status = false, Message = ex.Message });
+            }
+        }
     }
 }

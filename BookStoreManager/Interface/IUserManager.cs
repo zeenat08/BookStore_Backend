@@ -9,5 +9,6 @@ namespace BookStoreManager.Interface
     public interface IUserManager
     {
         Task<RegisterModel> Register(RegisterModel userData);
+        Task<LoginModel> Login(LoginModel loginDetails);
     }
 }

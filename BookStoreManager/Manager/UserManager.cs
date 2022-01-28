@@ -26,5 +26,17 @@ namespace BookStoreManager.Manager
                 throw new Exception(ex.Message);
             }
         }
+        public async Task<LoginModel> Login(LoginModel loginDetails)
+        {
+            try
+            {
+                return await this.repository.Login(loginDetails);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+      
     }
 }

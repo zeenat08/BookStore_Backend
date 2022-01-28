@@ -9,6 +9,7 @@ namespace BookStoreRepository.Interface
     public interface IUserRepository
     {
         Task<RegisterModel> Register(RegisterModel userData);
+        Task<LoginModel> Login(LoginModel loginDetails);
 
     }
 }
