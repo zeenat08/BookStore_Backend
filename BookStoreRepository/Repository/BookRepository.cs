@@ -3,6 +3,7 @@ using BookStoreRepository.Interface;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 using System.Threading.Tasks;
@@ -90,6 +91,48 @@ namespace BookStoreRepository.Repository
                     sqlConnection.Close();
                 }
         }
+        public bool UpdateBook(BookModel bookmodel)
+        {
+            sqlConnection = new SqlConnection(this.Configuration.GetConnectionString("BookStoreDB"));
+
+            using (sqlConnection)
+
+                try
+                {
+                    SqlCommand sqlCommand = new SqlCommand("spUpdateBook", sqlConnection);
+
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlConnection.Open();
+                    sqlCommand.Parameters.AddWithValue("@BookId", bookmodel.BookId);
+                    sqlCommand.Parameters.AddWithValue("@BookName", bookmodel.BookName);
+                    sqlCommand.Parameters.AddWithValue("@AuthorName", bookmodel.AuthorName);
+                    sqlCommand.Parameters.AddWithValue("@BookDescription", bookmodel.BookDescription);
+                    sqlCommand.Parameters.AddWithValue("@BookImage", bookmodel.BookImage);
+                    sqlCommand.Parameters.AddWithValue("@Quantity", bookmodel.Quantity);
+                    sqlCommand.Parameters.AddWithValue("@Price", bookmodel.Price);
+                    sqlCommand.Parameters.AddWithValue("@DiscountPrice", bookmodel.DiscountPrice);
+
+                    sqlCommand.Parameters.Add("@book", SqlDbType.Int);
+                    sqlCommand.Parameters["@book"].Direction = ParameterDirection.Output;
+                    sqlCommand.ExecuteNonQuery();
+                    var result = sqlCommand.Parameters["@book"].Value;
+                    if (result.Equals(bookmodel.BookId))
+                        return true;
+                    else
+                        return false;
+
+                }
+                catch (Exception e)
+                {
+                    throw new Exception(e.Message);
+                }
+                finally
+                {
+                    sqlConnection.Close();
+                }
+        }
+
+
 
     }
 }

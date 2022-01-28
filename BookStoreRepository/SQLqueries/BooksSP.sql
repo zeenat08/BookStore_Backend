@@ -48,3 +48,36 @@ BEGIN
 	WHERE BookId = @BookId
 END
 
+
+CREATE PROC spUpdateBook
+    @BookId INT,
+	@BookName VARCHAR(255),
+	@AuthorName VARCHAR(255),
+	@BookDescription VARCHAR(255),
+	@BookImage VARCHAR(255),
+	@Quantity INT,
+	@Price INT,
+	@DiscountPrice INT,
+	@book INT = NULL OUTPUT
+AS
+BEGIN
+	IF EXISTS(SELECT * FROM [Books] WHERE BookId = @BookId )
+	BEGIN
+		SET @book = @BookId
+		UPDATE [Books]
+		SET
+			BookName = CASE WHEN @BookName='' THEN BookName ELSE @BookName END,
+			AuthorName = CASE WHEN @AuthorName='' THEN AuthorName ELSE @AuthorName END, 
+			BookDescription= CASE WHEN @BookDescription='' THEN BookDescription ELSE @BookDescription END, 
+			BookImage =CASE WHEN @BookImage='' THEN BookImage ELSE @BookImage END, 
+			Quantity = @Quantity, 
+			Price = CASE WHEN @Price='0' THEN Price ELSE @Price END, 
+			DiscountPrice = CASE WHEN @DiscountPrice='0' THEN DiscountPrice ELSE @DiscountPrice END
+		WHERE
+			BookId = @BookId;
+	END
+	ELSE
+	BEGIN
+		SET @book =NULL;
+	END
+END

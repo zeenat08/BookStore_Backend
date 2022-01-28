@@ -49,7 +49,7 @@ namespace BookStore.Controller
         }
 
         [HttpGet]
-        [Route("api/GetBook")]
+        [Route("GetBook")]
         public IActionResult GetBook(int bookId)
         {
             var result = this.manager.GetBook(bookId);
@@ -68,6 +68,32 @@ namespace BookStore.Controller
             catch (Exception e)
             {
                 return this.NotFound(new ResponseModel<string>() { Status = false, Message = e.Message });
+            }
+        }
+
+        [HttpPut]
+        [Route("UpdateBook")]
+        public IActionResult UpdateBook(BookModel Bookmodel)
+        {
+            try
+            {
+                var result = this.manager.UpdateBook(Bookmodel);
+                if (result)
+                {
+
+                    return this.Ok(new ResponseModel<string>() { Status = true, Message = "Book updated Successfully !" });
+                }
+                else
+                {
+
+                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = "Failed to updated Book" });
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return this.NotFound(new ResponseModel<string>() { Status = false, Message = ex.Message });
+
             }
         }
 
