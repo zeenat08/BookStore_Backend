@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BookStoreManager.Interface;
+using BookStoreModel;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,11 +9,43 @@ using System.Threading.Tasks;
 
 namespace BookStore.Controller
 {
-    public class BooksController : Controller
+    [ApiController]
+    [Route("api/[controller]")]
+    public class BooksController : ControllerBase
     {
-        public IActionResult Index()
+        private readonly IBookManager manager;
+        private readonly IConfiguration configuration;
+        public BooksController(IBookManager manager, IConfiguration configuration)
         {
-            return View();
+            this.manager = manager;
+            this.configuration = configuration;
+        }
+
+
+        [HttpPost]
+        [Route("AddBook")]
+        public async Task<IActionResult> AddBook([FromBody] BookModel bookmodel)
+        {
+            try
+            {
+                var result = await this.manager.AddBook(bookmodel);
+                if (result)
+                {
+
+                    return this.Ok(new ResponseModel<BookModel>() { Status = true, Message = "Added New Book Successfully !" });
+                }
+                else
+                {
+
+                    return this.BadRequest(new { Status = false, Message = "Failed to add new book" });
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return this.NotFound(new { Status = false, Message = ex.Message });
+
+            }
         }
     }
 }

@@ -1,10 +1,13 @@
-﻿using System;
+﻿using BookStoreModel;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BookStoreManager.Interface
 {
-    interface IBookManager
+    public interface IBookManager
     {
+        Task <bool> AddBook(BookModel bookmodel);
     }
 }
