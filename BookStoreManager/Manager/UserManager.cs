@@ -49,6 +49,17 @@ namespace BookStoreManager.Manager
                 throw new Exception(ex.Message);
             }
         }
+        public async Task<bool> ForgotPassword(string Email)
+        {
+            try
+            {
+                return await this.repository.ForgotPassword(Email);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
 
     }
 }

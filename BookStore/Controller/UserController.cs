@@ -87,5 +87,27 @@ namespace BookStore.Controller
                 return this.NotFound(new { Status = false, Message = ex.Message });
             }
         }
+
+        [HttpPost]
+        [Route("forgotPassword")]
+        public async Task<IActionResult> ForgotPassword(string Email)
+        {
+            try
+            {
+                bool result = await this.manager.ForgotPassword(Email);
+                if (result == true)
+                {
+                    return this.Ok(new ResponseModel<bool> { Status = true, Message = " Link sent successfully", Data = result });
+                }
+                else
+                {
+                    return this.BadRequest(new { Status = false, Message = " Link failed to sent" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(new { Status = false, Message = ex.Message });
+            }
+        }
     }
 }

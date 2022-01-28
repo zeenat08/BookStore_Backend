@@ -58,3 +58,18 @@ BEGIN
 		UserId = @UserId		
 END
 
+CREATE PROC spUserForgot
+	@Email VARCHAR(50),
+	@user INT = NULL OUTPUT
+AS
+BEGIN
+	IF EXISTS(SELECT * FROM RegUser WHERE Email=@Email)
+	BEGIN 
+		SELECT @user =UserId FROM RegUser WHERE Email=@Email;
+	END
+	ELSE
+	BEGIN
+		SET @user = NULL;
+	END
+END
+
