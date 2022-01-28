@@ -81,3 +81,19 @@ BEGIN
 		SET @book =NULL;
 	END
 END
+
+CREATE PROC spDeleteBook
+	@BookId INT,
+	@book INT = NULL OUTPUT
+AS
+BEGIN
+	IF EXISTS(SELECT * FROM [Books] WHERE BookId = @BookId)
+	BEGIN
+		DELETE FROM [Books] WHERE BookId = @BookId
+		SET @book=1;
+	END
+	ELSE
+	BEGIN
+		SET @book = NULL;
+	END
+END

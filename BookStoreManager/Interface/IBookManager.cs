@@ -11,5 +11,6 @@ namespace BookStoreManager.Interface
         Task <bool> AddBook(BookModel bookmodel);
         BookModel GetBook(int bookId);
         bool UpdateBook(BookModel bookmodel);
+        bool DeleteBook(int bookId);
     }
 }
