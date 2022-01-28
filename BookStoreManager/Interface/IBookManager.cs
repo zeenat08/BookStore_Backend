@@ -9,5 +9,6 @@ namespace BookStoreManager.Interface
     public interface IBookManager
     {
         Task <bool> AddBook(BookModel bookmodel);
+        BookModel GetBook(int bookId);
     }
 }

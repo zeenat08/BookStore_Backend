@@ -33,3 +33,18 @@ BEGIN
 		VALUES(@BookName, @AuthorName, @BookDescription, @BookImage, @Quantity, @Price, @DiscountPrice, @Rating, @RatingCount)
 		SET @book = SCOPE_IDENTITY();
 END
+
+CREATE PROC spGetBook
+AS
+BEGIN 
+	SELECT * FROM [Books]
+END
+
+CREATE PROC spGetSpecificBook
+	@BookId INT
+AS
+BEGIN 
+	SELECT * FROM [Books]
+	WHERE BookId = @BookId
+END
+

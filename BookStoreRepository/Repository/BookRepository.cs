@@ -54,6 +54,42 @@ namespace BookStoreRepository.Repository
                     sqlConnection.Close();
                 }
         }
+        public BookModel GetBook(int bookId)
+        {
+            sqlConnection = new SqlConnection(this.Configuration.GetConnectionString("BookStoreDB"));
+            using (sqlConnection)
+                try
+                {
+                    SqlCommand sqlCommand = new SqlCommand("spGetSpecificBook", sqlConnection);
+
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    sqlConnection.Open();
+                    sqlCommand.Parameters.AddWithValue("@BookId", bookId);
+                    BookModel booksModel = new BookModel();
+                    SqlDataReader read = sqlCommand.ExecuteReader();
+                    if (read.Read())
+                    {
+                        booksModel.BookName = read["BookName"].ToString();
+                        booksModel.AuthorName = read["AuthorName"].ToString();
+                        booksModel.BookDescription = read["BookDescription"].ToString();
+                        booksModel.BookImage = read["BookImage"].ToString();
+                        booksModel.Quantity = read["Quantity"].ToString();
+                        booksModel.Price = Convert.ToInt32(read["Price"]);
+                        booksModel.DiscountPrice = Convert.ToInt32(read["DiscountPrice"]);
+                        booksModel.Rating = Convert.ToInt32(read["Rating"]);
+                    }
+                    return booksModel;
+                }
+                catch (Exception e)
+                {
+                    throw new Exception(e.Message);
+                }
+                finally
+                {
+                    sqlConnection.Close();
+                }
+        }
 
     }
 }

@@ -47,5 +47,29 @@ namespace BookStore.Controller
 
             }
         }
+
+        [HttpGet]
+        [Route("api/GetBook")]
+        public IActionResult GetBook(int bookId)
+        {
+            var result = this.manager.GetBook(bookId);
+            try
+            {
+                if (result != null)
+                {
+                    return this.Ok(new { Status = true, Message = "Book is retrived", data = result });
+
+                }
+                else
+                {
+                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = "Try again" });
+                }
+            }
+            catch (Exception e)
+            {
+                return this.NotFound(new ResponseModel<string>() { Status = false, Message = e.Message });
+            }
+        }
+
     }
 }
