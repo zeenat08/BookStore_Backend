@@ -29,7 +29,7 @@ namespace BookStore.Controller
             try
             {
                 var result = await this.manager.Register(userData);
-                if (result !=null)
+                if (result != null)
                 {
                     return this.Ok(new ResponseModel<RegisterModel>() { Status = true, Message = "Added New User Successfully !", Data = result });
                 }
@@ -58,6 +58,28 @@ namespace BookStore.Controller
                 else
                 {
                     return this.BadRequest(new { Status = false, Message = "Failed to Login, Try again" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(new { Status = false, Message = ex.Message });
+            }
+        }
+
+        [HttpPut]
+        [Route("resetPassword")]
+        public async Task<IActionResult> Resetpassword([FromBody] ResetPasswordModel resetPassword)
+        {
+            try
+            {
+                var result = await this.manager.ResetPassword(resetPassword);
+                if (result != null)
+                {
+                    return this.Ok(new ResponseModel<ResetPasswordModel> { Status = true, Message = " Reset password successful", Data = result });
+                }
+                else
+                {
+                    return this.BadRequest(new { Status = false, Message = "Failed to Reset Your Password, Try again" });
                 }
             }
             catch (Exception ex)

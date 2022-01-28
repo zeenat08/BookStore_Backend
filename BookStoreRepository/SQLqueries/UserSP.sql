@@ -46,3 +46,15 @@ BEGIN
 	END
 END
 
+CREATE PROC spUserReset
+	@UserId INT,
+	@Password VARCHAR(50)
+AS
+BEGIN
+	UPDATE RegUser
+	SET
+		Password = @Password
+	WHERE
+		UserId = @UserId		
+END
+

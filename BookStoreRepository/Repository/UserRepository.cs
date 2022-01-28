@@ -138,6 +138,34 @@ namespace BookStoreRepository.Repository
                 sqlConnection.Close();
             }
         }
+        public async Task<ResetPasswordModel> ResetPassword(ResetPasswordModel resetPassword)
+        {
+            sqlConnection = new SqlConnection(this.Configuration.GetConnectionString("BookStoreDB"));
+            using (sqlConnection)
+                try
+                {
+                    SqlCommand sqlCommand = new SqlCommand("spUserReset", sqlConnection);
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlConnection.Open();
+                    var password = this.EncryptPassword(resetPassword.NewPassword);
+                    sqlCommand.Parameters.AddWithValue("@Email", resetPassword.Email);
+                    sqlCommand.Parameters.AddWithValue("@UserId", resetPassword.UserId);
+                    sqlCommand.Parameters.AddWithValue("@NewPassword", resetPassword.NewPassword);
+
+                    await sqlCommand.ExecuteNonQueryAsync();
+
+                    return resetPassword;
+                }
+                catch (Exception e)
+                {
+                    throw new Exception(e.Message);
+                }
+                finally
+                {
+                    sqlConnection.Close();
+                }
+        }
+
 
     }
 }

@@ -37,6 +37,18 @@ namespace BookStoreManager.Manager
                 throw new Exception(ex.Message);
             }
         }
-      
+
+        public async Task<ResetPasswordModel> ResetPassword(ResetPasswordModel resetPassword)
+        {
+            try
+            {
+                return await this.repository.ResetPassword(resetPassword);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
     }
 }
