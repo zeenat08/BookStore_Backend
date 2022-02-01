@@ -76,3 +76,19 @@ BEGIN
 	LEFT JOIN [Books] AS b ON c.BookId = B.BookId
 	WHERE C.UserId = @UserId
 END
+
+CREATE PROC spDeleteCart
+	@CartID INT,
+	@cart INT =NULL OUTPUT
+AS
+BEGIN
+	IF EXISTS(SELECT * FROM [CART] WHERE CartID = @CartID)
+	BEGIN
+		DELETE FROM [CART] WHERE CartID = @CartID
+		SET @cart = 1;
+	END
+	ELSE
+	BEGIN
+		SET @cart = NULL;
+	END
+END

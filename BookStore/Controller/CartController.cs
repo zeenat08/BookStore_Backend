@@ -87,6 +87,28 @@ namespace BookStore.Controller
             }
         }
 
+        [HttpDelete]
+        [Route("DeleteCart")]
+        public IActionResult DeleteCart(int cartId)
+        {
+            try
+            {
+                var result = this.manager.DeleteCart(cartId);
+                if (result)
+                {
+                    return this.Ok(new ResponseModel<string>() { Status = true, Message = "Removed from cart" });
+                }
+                else
+                {
+                    return this.BadRequest(new { Status = false, Message = " failed ! try again" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(new { Status = false, Message = ex.Message });
+            }
+        }
+
     }
 
 }
