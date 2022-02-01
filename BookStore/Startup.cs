@@ -1,5 +1,6 @@
 using BookStoreManager.Interface;
 using BookStoreManager.Manager;
+using BookStoreRepository;
 using BookStoreRepository.Interface;
 using BookStoreRepository.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -40,6 +41,8 @@ namespace BookStore
             services.AddTransient<IAddressManager, AddressManager>();
             services.AddTransient<ICartRepository, CartRepository>();
             services.AddTransient<ICartManager, CartManager>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IOrderManager, OrderManager>();
 
             services.AddControllers();
             //all hosts

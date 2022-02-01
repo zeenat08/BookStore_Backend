@@ -4,13 +4,13 @@ using System.Text;
 
 namespace BookStoreModel
 {
-    public class CartModel
+    public class OrderModel
     {
-        public int CartID { get; set; }
+        public int OrderId { get; set; }
         public int UserId { get; set; }
-        public int BookId { get; set; }
-        public int Quantity { get; set; }
         public int AddressId { get; set; }
-
+        public int BookId { get; set; }
+        public int Price { get; set; }
+        public int Quantity { get; set; }
     }
 }
