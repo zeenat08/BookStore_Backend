@@ -83,5 +83,45 @@ namespace BookStoreRepository.Repository
                     sqlConnection.Close();
                 }
         }
+
+        public List<AddressModel> GetUserAddress(int userId)
+        {
+            sqlConnection = new SqlConnection(this.Configuration.GetConnectionString("BookStoreDB"));
+            try
+            {
+                sqlConnection.Open();
+                SqlCommand cmd = new SqlCommand("GetAddressDetails", sqlConnection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                cmd.Parameters.AddWithValue("@UserId", userId);
+                SqlDataReader readData = cmd.ExecuteReader();
+                List<AddressModel> userdetaillist = new List<AddressModel>();
+                if (readData.HasRows)
+                {
+                    while (readData.Read())
+                    {
+                        AddressModel userDetail = new AddressModel();
+                        userDetail.AddressId = readData.GetInt32("AddressId");
+                        userDetail.Address = readData.GetString("Address");
+                        userDetail.City = readData.GetString("City").ToString();
+                        userDetail.State = readData.GetString("State");
+                        userDetail.Type = readData.GetString("Type");
+                        userdetaillist.Add(userDetail);
+                    }
+                }
+                return userdetaillist;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+        }
+
+
     }
 }

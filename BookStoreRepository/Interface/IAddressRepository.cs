@@ -9,5 +9,7 @@ namespace BookStoreRepository.Interface
     {
         bool AddAddress(AddressModel addressDetails);
         bool EditAddress(AddressModel addressDetails);
+        List<AddressModel> GetUserAddress(int userId);
+
     }
 }
