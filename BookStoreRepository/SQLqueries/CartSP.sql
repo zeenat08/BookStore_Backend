@@ -34,3 +34,24 @@ BEGIN
 	END
 END
 
+CREATE PROC spUpdateCart
+	@CartID INT,
+	@Quantity INT,
+	@cart INT = NULL OUTPUT
+AS
+BEGIN
+	IF EXISTS(SELECT * FROM [CART] WHERE CartID = @CartID)
+	BEGIN
+			SET @cart = 1;
+			UPDATE CART
+			SET
+				Quantity = @Quantity
+			WHERE
+				CartID = @CartID;
+		END
+		ELSE
+		BEGIN
+			SET @cart = NULL;
+		END
+END
+

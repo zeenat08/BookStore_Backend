@@ -53,5 +53,38 @@ namespace BookStoreRepository.Repository
                     sqlConnection.Close();
                 }
         }
+        public bool UpdateCart(int cartId, int Quantity)
+        {
+            sqlConnection = new SqlConnection(this.Configuration.GetConnectionString("BookStoreDB"));
+            using (sqlConnection)
+                try
+                {
+                    SqlCommand sqlCommand = new SqlCommand("spUpdateCart", sqlConnection);
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlConnection.Open();
+                    sqlCommand.Parameters.AddWithValue("@CartId", cartId);
+                    sqlCommand.Parameters.AddWithValue("@Quantity", Quantity);
+                    sqlCommand.Parameters.Add("@cart", SqlDbType.Int).Direction = ParameterDirection.Output;
+                    sqlCommand.ExecuteNonQuery();
+                    var result = sqlCommand.Parameters["@cart"].Value;
+                    if (result.Equals(1))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception e)
+                {
+                    throw new Exception(e.Message);
+                }
+                finally
+                {
+                    sqlConnection.Close();
+                }
+        }
+
     }
 }

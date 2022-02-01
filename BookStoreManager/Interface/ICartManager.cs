@@ -8,5 +8,6 @@ namespace BookStoreManager.Interface
     public interface ICartManager
     {
         bool AddToCart(CartModel cartModel);
+        bool UpdateCart(int cartId, int Quantity);
     }
 }

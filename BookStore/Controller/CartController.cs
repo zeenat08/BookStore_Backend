@@ -43,6 +43,28 @@ namespace BookStore.Controller
             }
         }
 
+        [HttpPut]
+        [Route("UpdateCart")]
+        public IActionResult UpdateCart(int cartId, int Quantity)
+        {
+            try
+            {
+                var result = this.manager.UpdateCart(cartId, Quantity);
+                if (result)
+                {
+                    return this.Ok(new ResponseModel<string>() { Status = true, Message = "cart updated" });
+                }
+                else
+                {
+                    return this.BadRequest(new  { Status = false, Message = "Failed TryAgain" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(new { Status = false, Message = ex.Message });
+            }
+        }
+
     }
 
 }
