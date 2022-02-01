@@ -60,3 +60,9 @@ BEGIN
 	END
 END
 
+CREATE PROC spGetOrder
+	@UserId INT
+AS
+BEGIN
+	SELECT * FROM [Orders] WHERE UserId = @UserId
+END

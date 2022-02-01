@@ -8,5 +8,6 @@ namespace BookStoreRepository
     public interface IOrderRepository
     {
         bool AddOrder(List<CartModel> orderdetails);
+        List<OrderModel> GetOrderList(int userId);
     }
 }
