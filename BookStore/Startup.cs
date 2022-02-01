@@ -38,6 +38,8 @@ namespace BookStore
             services.AddTransient<IBookManager, BookManager>();
             services.AddTransient<IAddressRepository, AddressRepository>();
             services.AddTransient<IAddressManager, AddressManager>();
+            services.AddTransient<ICartRepository, CartRepository>();
+            services.AddTransient<ICartManager, CartManager>();
 
             services.AddControllers();
             //all hosts
