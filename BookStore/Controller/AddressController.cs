@@ -42,5 +42,27 @@ namespace BookStore.Controller
                 return this.NotFound(new { Status = false, Message = ex.Message });
             }
         }
+
+        [HttpPost]
+        [Route("EditAddress")]
+        public IActionResult EditAddress([FromBody] AddressModel addressDetails)
+        {
+            var result = this.manager.EditAddress(addressDetails);
+            try
+            {
+                if (result)
+                {
+                    return this.Ok(new ResponseModel<string>() { Status = true, Message = "Address updated successfully" });
+                }
+                else
+                {
+                    return this.BadRequest(new { Status = false, Message = "Failed to update address" });
+                }
+            }
+            catch (Exception e)
+            {
+                return this.NotFound(new { Status = false, Message = e.Message });
+            }
+        }
     }
 }

@@ -8,5 +8,6 @@ namespace BookStoreRepository.Interface
     public interface IAddressRepository
     {
         bool AddAddress(AddressModel addressDetails);
+        bool EditAddress(AddressModel addressDetails);
     }
 }
