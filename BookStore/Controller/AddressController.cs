@@ -79,12 +79,12 @@ namespace BookStore.Controller
                 }
                 else
                 {
-                    return this.BadRequest(new ResponseModel<string>() { Status = false, Message = "No address available" });
+                    return this.BadRequest(new { Status = false, Message = "No address available" });
                 }
             }
             catch (Exception e)
             {
-                return this.NotFound(new ResponseModel<string>() { Status = false, Message = e.Message });
+                return this.NotFound(new { Status = false, Message = e.Message });
             }
         }
     }
