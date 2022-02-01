@@ -55,3 +55,24 @@ BEGIN
 		END
 END
 
+CREATE PROC spGetCart
+	@UserId INT
+AS
+BEGIN
+	SELECT
+		c.CartID,
+		c.BookId,
+		c.UserId,
+		b.BookName,
+		b.AuthorName,
+		b.BookDescription,
+		b.BookImage ,
+		b.Quantity,
+		b.Price,
+		b.DiscountPrice,
+		b.Rating,
+		b.RatingCount
+	FROM [CART] AS c
+	LEFT JOIN [Books] AS b ON c.BookId = B.BookId
+	WHERE C.UserId = @UserId
+END

@@ -65,6 +65,28 @@ namespace BookStore.Controller
             }
         }
 
+        [HttpGet]
+        [Route("GetCart")]
+        public IActionResult GetCart(int userId)
+        {
+            try
+            {
+                var result = this.manager.GetCart(userId);
+                if (result != null)
+                {
+                    return this.Ok(new { Status = true, Message = "Cart item is present", Data = result });
+                }
+                else
+                {
+                    return this.BadRequest(new { Status = false, Message = "No Item in cart" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return this.NotFound(new { Status = false, Message = ex.Message });
+            }
+        }
+
     }
 
 }
