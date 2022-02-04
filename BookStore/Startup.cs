@@ -43,6 +43,8 @@ namespace BookStore
             services.AddTransient<ICartManager, CartManager>();
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IOrderManager, OrderManager>();
+            services.AddTransient<IWishlistRepository, WishlistRepository>();
+            services.AddTransient<IWishlistManager, WishlistManager>();
 
             services.AddControllers();
             //all hosts
