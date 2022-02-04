@@ -9,5 +9,7 @@ namespace BookStoreRepository.Interface
     {
         bool AddToWishList(WishlistModel wishListmodel);
         List<WishlistModel> GetWishList(int userId);
+        bool DeleteWishlist(int WishlistId);
+
     }
 }
