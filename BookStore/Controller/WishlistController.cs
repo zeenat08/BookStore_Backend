@@ -43,5 +43,28 @@ namespace BookStore.Controller
                 return this.NotFound(new { Status = false, Message = ex.Message });
             }
         }
+
+        [HttpGet]
+        [Route("getwishlist")]
+        public IActionResult GetWishList(int userId)
+        {
+            var result = this.manager.GetWishList(userId);
+            try
+            {
+                if (result != null)
+                {
+                    return this.Ok(new { Status = true, Message = "Wish List successfully retrived", Data = result });
+                }
+                else
+                {
+                    return this.BadRequest(new { Status = false, Message = "No WishList available" });
+                }
+            }
+            catch (Exception e)
+            {
+                return this.NotFound(new { Status = false, Message = e.Message });
+            }
+        }
     }
+
 }
